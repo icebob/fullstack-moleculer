@@ -1,0 +1,40 @@
+version: "3.3"
+
+services:
+
+
+  greeter:
+    build:
+      context: .
+    image: backend
+    env_file: docker-compose.env
+    environment:
+      SERVICES: greeter
+    networks:
+      - internal
+
+  products:
+    build:
+      context: .
+    image: backend
+    env_file: docker-compose.env
+    environment:
+      SERVICES: products
+    depends_on:
+      - mongo
+    networks:
+      - internal
+
+  mongo:
+    image: mongo:4
+    volumes:
+      - data:/data/db
+    networks:
+      - internal
+
+
+networks:
+  internal:
+
+volumes:
+  data:
