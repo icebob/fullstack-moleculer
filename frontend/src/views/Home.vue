@@ -12,14 +12,16 @@
       <p>Call the <code>math.add</code> action on the frontend (in this browser).</p>
       <button class="my-3" @click="callMathAdd">Call "math.add" with 5 + 3</button>
       <p><b>Response:</b>
-        <pre>{{ response1 }}</pre>
+        <pre v-if="response1" class="text-green-600">{{ response1 }}</pre>
+        <pre v-if="error1" class="text-red-600">{{ error1 }}</pre>
       </p>
 
       <h3 class="text-xl font-semibold">Calling a backend service</h3>
       <p>Call the <code>greeter.hello</code> action on the backend.</p>
       <button class="my-3" @click="callGreeterHello">Call "greeter.hello"</button>
       <p><b>Response:</b>
-        <pre>{{ response2 }}</pre>
+        <pre v-if="response2" class="text-green-600">{{ response2 }}</pre>
+        <pre v-if="error2" class="text-red-600">{{ error2 }}</pre>
       </p>
 
       <h3 class="text-xl font-semibold">How is it work?</h3>
@@ -36,13 +38,19 @@ export default {
   data() {
     return {
       response1: null,
-      response2: null
+      response2: null,
+      error1: null,
+      error2: null,
     }
   },
 
   methods: {
     async callMathAdd() {
-      this.response1 = await this.broker.call("math.add", { a: 5, b: 3 });
+      try {
+        this.response1 = await this.broker.call("math.add", { a: 5, b: 3 });
+      } catch(err) {
+        this.error1 = err;
+      }
     },
 
     async callGreeterHello() {

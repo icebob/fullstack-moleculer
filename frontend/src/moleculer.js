@@ -1,7 +1,7 @@
 import { ServiceBroker } from "moleculer-browser";
 import WebsocketClientTransporter from "./WebsocketClientTransporter";
 
-import MathService from "./services/math.service";
+//import MathService from "./services/math.service";
 
 export default {
   install(Vue) {
@@ -20,7 +20,12 @@ export default {
       }
     });
 
-    broker.createService(MathService);
+    // Load all services from the services directory
+    const r = require.context("./services/", true, /\.service.js$/);
+    r.keys().forEach(fName => {
+      const svc = r(fName).default;
+      broker.createService(svc);
+    });
 
     Vue.prototype.broker = broker;
   }
