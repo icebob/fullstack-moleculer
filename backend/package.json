@@ -25,9 +25,10 @@
     "moleculer-repl": "^0.6.4"
   },
   "dependencies": {
+    "moleculer": "^0.14.10",
     "moleculer-db": "^0.8.4",
     "moleculer-db-adapter-mongo": "^0.4.7",
-    "moleculer": "^0.14.10"
+    "socket.io": "^2.3.0"
   },
   "engines": {
     "node": ">= 10.x.x"
