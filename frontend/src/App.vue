@@ -1,8 +1,8 @@
 <template>
-  <div id="app">
+  <div id="app" v-if="ready">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/products">Products</router-link>
     </div>
     <router-view />
   </div>
@@ -10,8 +10,14 @@
 
 <script>
 export default {
+  data() {
+    return {
+      ready: false
+    };
+  },
   async mounted() {
     await this.broker.start();
+    this.ready = true;
   }
 };
 </script>
