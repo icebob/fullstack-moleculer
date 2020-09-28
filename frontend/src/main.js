@@ -1,5 +1,7 @@
 import Vue from "vue";
 
+import "./bus";
+
 import Moleculer from "./moleculer";
 Vue.use(Moleculer);
 
