@@ -5,10 +5,11 @@
       <h1 class="text-3xl font-semibold">Moleculer in the browser!</h1>
       <p>
         Really, a full-featured Moleculer node is running in your browser. Press
-        F12 and see the console messages. Cool, right?
+        F12 and see the console messages. Cool, right? Try to write into console
       </p>
+      <code>await broker.call("math.add", { a: 10, b: 15 })</code>
 
-      <h3 class="text-xl font-semibold">Calling a local service</h3>
+      <h3 class="mt-6 text-xl font-semibold">Calling a local service</h3>
       <p>Call the <code>math.add</code> action on the frontend (in this browser).</p>
       <button class="my-3" @click="callMathAdd">Call "math.add" with 5 + 3</button>
       <p><b>Response:</b>
@@ -26,7 +27,7 @@
 
       <h3 class="text-xl font-semibold">How is it work?</h3>
       <p>
-        Thanks for the <code>moleculer-browser</code> package, Moleculer is able to run in browser, too. It can communicate with the backend-side Moleculer node via Websocket transporter.
+        Thanks for the <code>moleculer-browser</code> package, Moleculer is able to run in browser, too. It can communicate with the backend Moleculer node via Websocket transporter.
       </p>
     </div>
   </div>

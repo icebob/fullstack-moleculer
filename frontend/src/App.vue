@@ -1,9 +1,30 @@
 <template>
   <div id="app" v-if="ready">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/products">Products</router-link>
-    </div>
+    <nav class="flex items-center justify-between bg-teal-500 p-6">
+      <div class="flex items-center flex-shrink-0 text-white mr-6">
+        <span class="font-semibold text-xl tracking-tight"
+          >Moleculer FullStack Example</span
+        >
+      </div>
+      <div class="flex justify-end">
+        <div class="text-sm flex-grow">
+          <router-link
+            class="block mt-4 inline-block mt-0 text-teal-200 hover:text-white mr-4"
+            active-class="text-white border-b-2"
+            to="/"
+            exact
+            >Home</router-link
+          >
+          <router-link
+            class="block mt-4 inline-block mt-0 text-teal-200 hover:text-white mr-4"
+            active-class="text-white border-b-2"
+            to="/products"
+            exact
+            >Products</router-link
+          >
+        </div>
+      </div>
+    </nav>
     <router-view />
   </div>
 </template>
@@ -38,18 +59,5 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>

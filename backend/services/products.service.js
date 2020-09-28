@@ -46,7 +46,7 @@ module.exports = {
 			 * @param {Context} ctx
 			 */
 			create(ctx) {
-				ctx.params.quantity = 0;
+				ctx.params.quantity = ctx.params.quantity || 0;
 			}
 		}
 	},
