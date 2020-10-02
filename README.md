@@ -22,7 +22,7 @@ Thanks for the [geut/moleculer-browser](https://github.com/geut/moleculer-browse
 
 I have created a Websocket server transporter and a Websocket client transporter. You should set the WebsocketServer transporter in the backend Moleculer node and set the WebsocketClient transporter in the browser Moleculer node using with the same port number.
 
-It means you can connect to the backend Moleculer node from multiple browser nodes and you can't use multiple backend nodes.
+It means you can connect to the backend Moleculer node from multiple browser nodes but you can't use multiple nodes on the backend.
 
 ## Configuration
 
