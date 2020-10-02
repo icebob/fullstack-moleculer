@@ -14,7 +14,7 @@ Why not? There are some use-case where it can be useful because
 - or just playing with something new & interesting.
 
 **It's <ins>not</ins> optimal for:**
-- web apps with hundreds users (Moleculer nodes always have to update the Service registries)
+- web apps with hundreds users (Moleculer nodes always have to rebuild the Service registry)
 - production applications (it's just a concept yet)
 
 ## How is it work?
@@ -85,6 +85,28 @@ r.keys().forEach(fName => {
 });
 ```
 
+# Try it out
+**Clone the repo**
+```bash
+git clone https://github.com/icebob/fullstack-moleculer.git
+cd fullstack-moleculer
+```
+
+**Install & start backend Moleculer node**
+```bash
+cd backend
+npm i
+npm run dev
+```
+
+**Install & start frontend Moleculer node**
+```bash
+cd frontend
+npm i
+npm run dev
+```
+
+Open the http://localhost:8080 and try out.
 
 
 # License

@@ -1,7 +1,6 @@
 "use strict";
 
 const WebsocketServerTransporter = require("./WebsocketServerTransporter");
-
 /**
  * Moleculer ServiceBroker configuration file
  *
