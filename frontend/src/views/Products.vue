@@ -30,10 +30,24 @@
 
     <div class="my-4">
       <button
-        class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline inline-flex items-center"
         type="button"
         @click="selected = {}"
       >
+        <svg
+          class="fill-current w-6 h-6 mr-2"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+          />
+        </svg>
         New product
       </button>
     </div>
@@ -98,6 +112,26 @@
             >
               {{ selected._id ? "Update" : "Create" }}
             </button>
+            <button
+              v-if="selected._id"
+              class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline inline-flex items-center"
+              type="button"
+              @click="remove()"
+            >
+              <svg
+                class="fill-current w-6 h-6"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z" />
+                <path
+                  fill-rule="evenodd"
+                  d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
           </div>
         </form>
       </div>
@@ -116,9 +150,31 @@ export default {
     };
   },
 
+  events: {
+    "products.*"(ctx) {
+      console.log("Products changed.", ctx.eventName, ctx.params);
+    }
+  },
+
   methods: {
     selectItem(item) {
       this.selected = Object.assign({}, item);
+    },
+
+    async create() {
+      this.error = null;
+      try {
+        const res = await this.broker.call("products.create", this.selected);
+        this.products.push(res);
+        this.selectItem(res);
+      } catch (err) {
+        const msg =
+          err.name == "ValidationError"
+            ? err.data.map(e => e.message).join(" ")
+            : err.message;
+        this.error = "Unable to create product: " + msg;
+        console.error("Unable to create product", err);
+      }
     },
 
     async update() {
@@ -140,25 +196,27 @@ export default {
       }
     },
 
-    async create() {
+    async remove() {
       this.error = null;
       try {
-        const res = await this.broker.call("products.create", this.selected);
-        this.products.push(res);
-        this.selectItem(res);
+        await this.broker.call("products.remove", { id: this.selected._id });
+
+        this.products = this.products.filter(p => p._id != this.selected._id);
+        this.selectItem(null);
       } catch (err) {
-        const msg =
-          err.name == "ValidationError"
-            ? err.data.map(e => e.message).join(" ")
-            : err.message;
-        this.error = "Unable to create product: " + msg;
-        console.error("Unable to create product", err);
+        const msg = err.message;
+        this.error = "Unable to remove product: " + msg;
+        console.error("Unable to remove product", err);
       }
+    },
+
+    async fetch() {
+      this.products = await this.broker.call("products.find");
     }
   },
 
   async mounted() {
-    this.products = await this.broker.call("products.find");
+    await this.fetch();
   }
 };
 </script>

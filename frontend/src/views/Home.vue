@@ -12,7 +12,8 @@
       <h3 class="mt-6 text-xl font-semibold">Calling a local service</h3>
       <p>Call the <code>math.add</code> action on the frontend (in this browser).</p>
       <button class="my-3" @click="callMathAdd">Call "math.add" with 5 + 3</button>
-      <p><b>Response:</b>
+      <p v-if="response1 || error1">
+        <b>Response:</b>
         <pre v-if="response1" class="text-green-600">{{ response1 }}</pre>
         <pre v-if="error1" class="text-red-600">{{ error1 }}</pre>
       </p>
@@ -20,14 +21,18 @@
       <h3 class="text-xl font-semibold">Calling a backend service</h3>
       <p>Call the <code>greeter.hello</code> action on the backend.</p>
       <button class="my-3" @click="callGreeterHello">Call "greeter.hello"</button>
-      <p><b>Response:</b>
+      <p v-if="response2 || error2">
+        <b>Response:</b>
         <pre v-if="response2" class="text-green-600">{{ response2 }}</pre>
         <pre v-if="error2" class="text-red-600">{{ error2 }}</pre>
       </p>
 
-      <h3 class="text-xl font-semibold">How is it work?</h3>
+      <h3 class="text-xl font-semibold">Receiving event from backend</h3>
+      <p>Listening the <code>greeter.counter.changed</code> event which generates on the backend <code>greeter</code> service.</p>
       <p>
-        Thanks for the <code>moleculer-browser</code> package, Moleculer is able to run in browser, too. It can communicate with the backend Moleculer node via Websocket transporter.
+        <b>Response:</b>
+        <br/>
+        <code class="text-green-600">{{ response3 }}</code>
       </p>
     </div>
   </div>
@@ -40,8 +45,18 @@ export default {
     return {
       response1: null,
       response2: null,
+      response3: null,
       error1: null,
       error2: null,
+    }
+  },
+
+  /**
+   * Subscribe to Moleculer events
+   */
+  events: {
+    "greeter.counter.changed"(ctx) {
+      this.response3 = ctx.params;
     }
   },
 

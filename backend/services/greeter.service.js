@@ -83,8 +83,9 @@ module.exports = {
 	async started() {
 		let counter = 1;
 		this.timer = setInterval(() => {
-			this.broker.broadcast("greeter.counting", { counter: counter++ });
-		}, 2000);
+			this.logger.info("Send counter changed event", { counter });
+			this.broker.broadcast("greeter.counter.changed", { counter: counter++ });
+		}, 5000);
 	},
 
 	/**

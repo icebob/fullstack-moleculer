@@ -1,22 +1,22 @@
 <template>
   <div id="app" v-if="ready">
-    <nav class="flex items-center justify-between bg-teal-500 p-6">
+    <nav class="flex items-center justify-between bg-teal-500 p-3">
       <div class="flex items-center flex-shrink-0 text-white mr-6">
         <span class="font-semibold text-xl tracking-tight"
-          >Moleculer FullStack Example</span
+          >Moleculer Full-stack Example</span
         >
       </div>
       <div class="flex justify-end">
         <div class="text-sm flex-grow">
           <router-link
-            class="block mt-4 inline-block mt-0 text-teal-200 hover:text-white mr-4"
+            class="block mt-4 inline-block mt-0 text-teal-200 hover:text-white mr-4 text-lg"
             active-class="text-white border-b-2"
             to="/"
             exact
             >Home</router-link
           >
           <router-link
-            class="block mt-4 inline-block mt-0 text-teal-200 hover:text-white mr-4"
+            class="block mt-4 inline-block mt-0 text-teal-200 hover:text-white mr-4 text-lg"
             active-class="text-white border-b-2"
             to="/products"
             exact
@@ -39,12 +39,6 @@ export default {
     };
   },
 
-  events: {
-	  "greeter.counting"(ctx) {
-      console.log("Counting", ctx.params);
-	  }
-  },
-  
   async mounted() {
     await this.broker.start();
     this.ready = true;
