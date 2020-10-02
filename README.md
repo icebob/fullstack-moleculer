@@ -1,6 +1,9 @@
 # Fullstack Moleculer
 This is a Proof-of-Concept project where there is Moleculer in your browser and on the server.
 
+![Screenshot](https://user-images.githubusercontent.com/306521/94959804-17091500-04f2-11eb-8cad-df82ca5f4be2.png)
+
+
 ## Why?
 Why not? There are some use-case where it can be useful because
 - you don't have to create REST API/GraphQL endpoint in the backend for every entities
