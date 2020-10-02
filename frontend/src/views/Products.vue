@@ -2,11 +2,12 @@
   <div class="p-5">
     <table
       v-if="products"
-      class="rounded-lg shadow border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative"
+      class="m-auto rounded-lg shadow border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative"
+      style="max-width: 960px"
     >
       <thead>
         <tr
-          class="sticky top-0 border-b border-teal-500 bg-teal-600 text-white"
+          class="sticky top-0 border-b border-primary-dark bg-primary-dark text-white"
         >
           <th class="px-4 py-2 rounded-tl-lg">Name</th>
           <th class="px-4 py-2">Quantity</th>
@@ -15,8 +16,10 @@
       </thead>
       <tbody>
         <tr
-          class="cursor-pointer hover:bg-teal-100 transition-colors transition duration-200 ease-in-out"
-          :class="{ 'bg-teal-200': selected && selected._id == product._id }"
+          class="cursor-pointer hover:bg-primary-lightest transition-colors transition duration-200 ease-in-out"
+          :class="{
+            'bg-primary-lighter': selected && selected._id == product._id
+          }"
           v-for="product in products"
           :key="product._id"
           @click="selectItem(product)"
@@ -30,7 +33,7 @@
 
     <div class="my-4">
       <button
-        class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline inline-flex items-center"
+        class="inline-flex items-center"
         type="button"
         @click="selected = {}"
       >
@@ -53,7 +56,7 @@
     </div>
 
     <div v-if="selected" class="mt-10">
-      <div class="w-full max-w-sm m-auto">
+      <div class="w-full max-w-md m-auto">
         <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div class="mb-4">
             <label
@@ -106,7 +109,7 @@
           </div>
           <div class="flex items-center justify-between">
             <button
-              class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              class=""
               type="button"
               @click="selected._id ? update() : create()"
             >
@@ -114,7 +117,7 @@
             </button>
             <button
               v-if="selected._id"
-              class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline inline-flex items-center"
+              class="bg-red-500 hover:bg-red-600 inline-flex items-center"
               type="button"
               @click="remove()"
             >
@@ -153,11 +156,34 @@ export default {
   events: {
     "products.*"(ctx) {
       console.log("Products changed.", ctx.eventName, ctx.params);
+      if (ctx.eventName.endsWith("removed")) {
+        // Unselect if it's the selected item
+        if (this.selected && ctx.params._id == this.selected._id)
+          this.selectItem(null);
+
+        // Remove the deleted record
+        this.products = this.products.filter(p => p._id != ctx.params._id);
+      } else {
+        // Update or add the received record.
+        let found = false;
+        this.products.forEach(p => {
+          if (p._id == ctx.params._id) {
+            found = true;
+            Object.assign(p, ctx.params);
+          }
+        });
+        if (!found) {
+          this.products.push(ctx.params);
+        }
+      }
     }
   },
 
   methods: {
     selectItem(item) {
+      this.error = null;
+      if (item == null) return (this.selected = null);
+
       this.selected = Object.assign({}, item);
     },
 
@@ -165,7 +191,6 @@ export default {
       this.error = null;
       try {
         const res = await this.broker.call("products.create", this.selected);
-        this.products.push(res);
         this.selectItem(res);
       } catch (err) {
         const msg =
@@ -180,12 +205,7 @@ export default {
     async update() {
       this.error = null;
       try {
-        const res = await this.broker.call("products.update", this.selected);
-        const orig = this.products.find(p => p._id == res._id);
-        if (orig) {
-          Object.assign(orig, res);
-          this.selectItem(orig);
-        }
+        await this.broker.call("products.update", this.selected);
       } catch (err) {
         const msg =
           err.name == "ValidationError"
@@ -200,9 +220,6 @@ export default {
       this.error = null;
       try {
         await this.broker.call("products.remove", { id: this.selected._id });
-
-        this.products = this.products.filter(p => p._id != this.selected._id);
-        this.selectItem(null);
       } catch (err) {
         const msg = err.message;
         this.error = "Unable to remove product: " + msg;

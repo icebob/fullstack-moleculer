@@ -1,11 +1,15 @@
 @tailwind base;
 
 button {
-    @apply bg-teal-500 text-white font-bold py-2 px-4 rounded;
+    @apply bg-primary text-white font-bold py-2 px-4 rounded shadow;
 }
 
 button:hover {
-    @apply bg-teal-600;
+    @apply bg-primary-dark;
+}
+
+button:focus {
+    @apply outline-none shadow-outline;
 }
 
 

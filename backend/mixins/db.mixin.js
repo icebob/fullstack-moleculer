@@ -36,7 +36,7 @@ module.exports = function(collection) {
 			 * @param {Context} ctx
 			 */
 			async entityChanged(type, json, ctx) {
-				ctx.emit(`${collection}.${type}`, json);
+				ctx.broadcast(`${collection}.${type}`, type == "removed" ? { _id: ctx.params.id } : json);
 				ctx.broadcast(cacheCleanEventName);
 			}
 		},

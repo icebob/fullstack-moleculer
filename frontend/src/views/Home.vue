@@ -35,6 +35,11 @@
         <code class="text-green-600">{{ response3 }}</code>
       </p>
     </div>
+
+    <hr class="mt-20"/>
+    <div class="mt-2">
+      <a class="text-primary-dark hover:underline mr-4 text-md" href="https://github.com/icebob/fullstack-moleculer" target="_blank">View source on Github</a>
+    </div>
   </div>
 </template>
 
