@@ -60,12 +60,18 @@ export default {
    * Subscribe to Moleculer events
    */
   events: {
+    /**
+     * Subscribe for the Moleculer event. It's fired on the backend side.
+     */
     "greeter.counter.changed"(ctx) {
       this.response3 = ctx.params;
     }
   },
 
   methods: {
+    /**
+     * Call the "math.add" local service action.
+     */
     async callMathAdd() {
       try {
         this.response1 = await this.broker.call("math.add", { a: 5, b: 3 });
@@ -74,6 +80,9 @@ export default {
       }
     },
 
+    /**
+     * Call the "greeter.hello" backend service action.
+     */
     async callGreeterHello() {
       this.response2 = await this.broker.call("greeter.hello");
     }

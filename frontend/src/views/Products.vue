@@ -154,6 +154,9 @@ export default {
   },
 
   events: {
+    /**
+     * Subscribe to the products service event and update the local products list.
+     */
     "products.*"(ctx) {
       console.log("Products changed.", ctx.eventName, ctx.params);
       if (ctx.eventName.endsWith("removed")) {
@@ -180,6 +183,9 @@ export default {
   },
 
   methods: {
+    /**
+     * Select an item and copy the properties for editing.
+     */
     selectItem(item) {
       this.error = null;
       if (item == null) return (this.selected = null);
@@ -187,6 +193,10 @@ export default {
       this.selected = Object.assign({}, item);
     },
 
+    /**
+     * Create a new product. Call the "products.create" action
+     * on the backend side.
+     */
     async create() {
       this.error = null;
       try {
@@ -202,6 +212,10 @@ export default {
       }
     },
 
+    /**
+     * Update the selected product item. Call the "products.update" action
+     * on the backend side.
+     */
     async update() {
       this.error = null;
       try {
@@ -216,6 +230,10 @@ export default {
       }
     },
 
+    /**
+     * Remove the selected product item. Call the "products.remove" action
+     * on the backend side.
+     */
     async remove() {
       this.error = null;
       try {
@@ -227,6 +245,10 @@ export default {
       }
     },
 
+    /**
+     * Fetch the products. Call the "products.find" action
+     * on the backend side.
+     */
     async fetch() {
       this.products = await this.broker.call("products.find");
     }

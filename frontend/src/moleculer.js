@@ -2,6 +2,9 @@ import { ServiceBroker } from "moleculer-browser";
 import WebsocketClientTransporter from "./WebsocketClientTransporter";
 import uid from "uid";
 
+/**
+ * Create ServiceBroker instance.
+ */
 function createBroker() {
   const broker = new ServiceBroker({
     nodeID: "frontend-" + uid(8),
@@ -19,6 +22,10 @@ function createBroker() {
   return broker;
 }
 
+/**
+ * Load all services from the "services" folder.
+ * @param {ServiceBroker} broker 
+ */
 function loadAllServices(broker) {
   const r = require.context("./services/", true, /\.service.js$/);
   r.keys().forEach(fName => {
@@ -27,6 +34,12 @@ function loadAllServices(broker) {
   });
 }
 
+/**
+ * Create an event linker service which listens the Moleculer events
+ * and calls the handlers in Vue components.
+ * 
+ * @param {ServiceBroker} broker 
+ */
 function createEventLinkerService(broker) {
   const eventListeners = {};
   let service;
@@ -98,6 +111,7 @@ function createEventLinkerService(broker) {
 
 export default {
   install(Vue) {
+    // Create broker
     const broker = createBroker();
 
     Vue.prototype.broker = broker;

@@ -40,6 +40,7 @@ export default {
   },
 
   async mounted() {
+    // Start broker
     await this.broker.start();
     this.ready = true;
   }
