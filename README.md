@@ -8,11 +8,12 @@ Why not? There are some use-case where it can be useful because
 - you can use the built-in transporter to send events to the browser from backend
 
 
-It can be optimal for: 
+**It can be optimal for:**
 - internal web apps with limited users,
-- Electron-based apps using Moleculer to communicate between renderer process and main process.
+- Electron-based apps using Moleculer to communicate between renderer process and main process
+- or just playing with something new & interesting.
 
-It's **not** optimal for:
+**It's <ins>not</ins> optimal for:**
 - web apps with hundreds users (Moleculer nodes always have to update the Service registries)
 - production applications (it's just a concept yet)
 
