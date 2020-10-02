@@ -103,6 +103,8 @@ export default {
     Vue.prototype.broker = broker;
     window.broker = broker;
 
+    window.addEventListener("unload", () => broker.stop());
+
     // Load all services from the services directory
     loadAllServices(broker);
 
