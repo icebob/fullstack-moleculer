@@ -108,10 +108,6 @@ npm run dev
 
 Open the http://localhost:8080 and try out.
 
-
-## License
-fullstack-moleculer is available under the [MIT license](https://tldrlegal.com/license/mit-license).
-
 ## Contact
 
 Copyright (C) 2020 Icebob
