@@ -38,6 +38,13 @@ export default {
       ready: false
     };
   },
+
+  events: {
+	  "greeter.counting"(ctx) {
+      console.log("Counting", ctx.params);
+	  }
+  },
+  
   async mounted() {
     await this.broker.start();
     this.ready = true;

@@ -81,13 +81,16 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-
+		let counter = 1;
+		this.timer = setInterval(() => {
+			this.broker.broadcast("greeter.counting", { counter: counter++ });
+		}, 2000);
 	},
 
 	/**
 	 * Service stopped lifecycle event handler
 	 */
 	async stopped() {
-
+		clearInterval(this.timer);
 	}
 };
