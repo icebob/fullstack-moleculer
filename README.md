@@ -1,10 +1,9 @@
 # Fullstack Moleculer
 This is a Proof-of-Concept project where there is [Moleculer](https://moleculer.services/) in your browser and on the server.
 
->Moleculer is a progressive microservices framework for Node.js
-
 ![Screenshot](https://user-images.githubusercontent.com/306521/94959804-17091500-04f2-11eb-8cad-df82ca5f4be2.png)
 
+>Moleculer is a progressive microservices framework for Node.js.
 
 ## Why?
 Why not? There are some use-case where it can be useful because
