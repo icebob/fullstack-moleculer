@@ -22,6 +22,13 @@
             exact
             >Products</router-link
           >
+          <router-link
+            class="block mt-4 inline-block mt-0 text-teal-100 hover:text-white mr-4 text-lg"
+            active-class="text-white border-b-2"
+            to="/protected"
+            exact
+            >Protected</router-link
+          >
         </div>
       </div>
     </nav>

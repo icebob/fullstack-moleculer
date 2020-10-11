@@ -2,6 +2,7 @@
 
 //const WebsocketServerTransporter = require("./WebsocketServerTransporter");
 const MqttTransporter = require("moleculer").Transporters.MQTT;
+
 /**
  * Moleculer ServiceBroker configuration file
  *
@@ -193,7 +194,7 @@ module.exports = {
 	},
 
 	// Register custom middlewares
-	middlewares: [],
+	middlewares: [require("./middlewares/auth.middleware")],
 
 	// Register custom REPL commands.
 	replCommands: null,
