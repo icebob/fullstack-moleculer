@@ -28,6 +28,7 @@
     "moleculer": "^0.14.10",
     "moleculer-db": "^0.8.4",
     "moleculer-db-adapter-mongo": "^0.4.7",
+    "mqtt": "^4.2.1",
     "socket.io": "^2.3.0"
   },
   "engines": {

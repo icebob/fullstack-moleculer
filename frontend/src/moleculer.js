@@ -1,5 +1,6 @@
 import { ServiceBroker } from "@geut/moleculer-browser";
-import WebsocketClientTransporter from "./WebsocketClientTransporter";
+//import WebsocketClientTransporter from "./WebsocketClientTransporter";
+import MqttTransporter from "./MQTTTransporter";
 import uid from "uid";
 
 /**
@@ -8,7 +9,8 @@ import uid from "uid";
 function createBroker() {
   const broker = new ServiceBroker({
     nodeID: "frontend-" + uid(8),
-    transporter: new WebsocketClientTransporter(),
+    //transporter: new WebsocketClientTransporter(),
+    transporter: new MqttTransporter("ws://localhost:8081"),
     metrics: {
       enabled: false,
       reporter: "Console",
