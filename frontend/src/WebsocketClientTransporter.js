@@ -1,7 +1,7 @@
 import IO from "socket.io-client";
 
-import Moleculer from "moleculer-browser";
-const BaseTransporter = Moleculer.Transporters.Base;
+import { Transporters } from "@geut/moleculer-browser";
+const BaseTransporter = Transporters.Base;
 
 class WebsocketServerTransporter extends BaseTransporter {
   constructor(opts) {

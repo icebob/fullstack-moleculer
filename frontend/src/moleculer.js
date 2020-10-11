@@ -1,4 +1,4 @@
-import { ServiceBroker } from "moleculer-browser";
+import { ServiceBroker } from "@geut/moleculer-browser";
 import WebsocketClientTransporter from "./WebsocketClientTransporter";
 import uid from "uid";
 
