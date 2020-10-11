@@ -11,12 +11,12 @@ function createBroker() {
     transporter: new WebsocketClientTransporter(),
     metrics: {
       enabled: false,
-      reporter: "Console"
+      reporter: "Console",
     },
     tracing: {
       enabled: true,
-      exporter: "Console"
-    }
+      exporter: "Console",
+    },
   });
 
   return broker;
@@ -24,11 +24,11 @@ function createBroker() {
 
 /**
  * Load all services from the "services" folder.
- * @param {ServiceBroker} broker 
+ * @param {ServiceBroker} broker
  */
 function loadAllServices(broker) {
   const r = require.context("./services/", true, /\.service.js$/);
-  r.keys().forEach(fName => {
+  r.keys().forEach((fName) => {
     const svc = r(fName).default;
     broker.createService(svc);
   });
@@ -37,18 +37,18 @@ function loadAllServices(broker) {
 /**
  * Create an event linker service which listens the Moleculer events
  * and calls the handlers in Vue components.
- * 
- * @param {ServiceBroker} broker 
+ *
+ * @param {ServiceBroker} broker
  */
 function createEventLinkerService(broker) {
   const eventListeners = {};
   let service;
 
-  const addListeners = async function() {
+  const addListeners = async function () {
     let changed = false;
     if (this.$options.events) {
       const conf = this.$options.events;
-      Object.keys(conf).forEach(key => {
+      Object.keys(conf).forEach((key) => {
         let func = conf[key].bind(this);
         if (!eventListeners[key]) eventListeners[key] = [];
 
@@ -61,15 +61,15 @@ function createEventLinkerService(broker) {
     if (changed) await reloadService();
   };
 
-  const removeListeners = async function() {
+  const removeListeners = async function () {
     let changed = false;
     if (this.$options.events) {
       const conf = this.$options.events;
-      Object.keys(conf).forEach(key => {
+      Object.keys(conf).forEach((key) => {
         if (eventListeners[key]) {
           broker.logger.debug(`Remove event listener for '${key}'`);
           eventListeners[key] = eventListeners[key].filter(
-            fn => fn != conf[key].__binded
+            (fn) => fn != conf[key].__binded
           );
           changed = true;
         }
@@ -86,15 +86,15 @@ function createEventLinkerService(broker) {
 
     const schema = {
       name: "$event-linker",
-      events: {}
+      events: {},
     };
 
     Object.entries(eventListeners).forEach(([key, fnList]) => {
       schema.events[key] = {
         context: true,
         handler(ctx) {
-          fnList.forEach(fn => fn.call(null, ctx));
-        }
+          fnList.forEach((fn) => fn.call(null, ctx));
+        },
       };
     });
 
@@ -105,7 +105,7 @@ function createEventLinkerService(broker) {
     addListeners,
     removeListeners,
     reloadService,
-    service
+    service,
   };
 }
 
@@ -127,7 +127,7 @@ export default {
 
     Vue.mixin({
       created: linker.addListeners,
-      beforeDestroy: linker.removeListeners
+      beforeDestroy: linker.removeListeners,
     });
-  }
+  },
 };

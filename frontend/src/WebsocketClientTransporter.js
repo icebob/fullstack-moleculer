@@ -9,7 +9,7 @@ class WebsocketServerTransporter extends BaseTransporter {
 
     if (!this.opts) {
       this.opts = {
-        port: 3300
+        port: 3300,
       };
     }
 
@@ -68,7 +68,7 @@ class WebsocketServerTransporter extends BaseTransporter {
     const t = this.getTopicName(cmd, nodeID);
 
     if (!this.socket.hasListeners(t)) {
-      this.socket.on(t, data => {
+      this.socket.on(t, (data) => {
         const msg = this.arrayBufferToString(data);
         this.receive(cmd, msg);
       });

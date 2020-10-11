@@ -35,7 +35,7 @@
 export default {
   data() {
     return {
-      ready: false
+      ready: false,
     };
   },
 
@@ -43,7 +43,7 @@ export default {
     // Start broker
     await this.broker.start();
     this.ready = true;
-  }
+  },
 };
 </script>
 

@@ -3,6 +3,6 @@ export default {
   actions: {
     add(ctx) {
       return Number(ctx.params.a) + Number(ctx.params.b);
-    }
-  }
+    },
+  },
 };

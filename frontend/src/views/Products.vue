@@ -18,7 +18,7 @@
         <tr
           class="cursor-pointer hover:bg-primary-lightest transition-colors transition duration-200 ease-in-out"
           :class="{
-            'bg-primary-lighter': selected && selected._id == product._id
+            'bg-primary-lighter': selected && selected._id == product._id,
           }"
           v-for="product in products"
           :key="product._id"
@@ -149,7 +149,7 @@ export default {
     return {
       products: null,
       selected: null,
-      error: null
+      error: null,
     };
   },
 
@@ -165,11 +165,11 @@ export default {
           this.selectItem(null);
 
         // Remove the deleted record
-        this.products = this.products.filter(p => p._id != ctx.params._id);
+        this.products = this.products.filter((p) => p._id != ctx.params._id);
       } else {
         // Update or add the received record.
         let found = false;
-        this.products.forEach(p => {
+        this.products.forEach((p) => {
           if (p._id == ctx.params._id) {
             found = true;
             Object.assign(p, ctx.params);
@@ -179,7 +179,7 @@ export default {
           this.products.push(ctx.params);
         }
       }
-    }
+    },
   },
 
   methods: {
@@ -205,7 +205,7 @@ export default {
       } catch (err) {
         const msg =
           err.name == "ValidationError"
-            ? err.data.map(e => e.message).join(" ")
+            ? err.data.map((e) => e.message).join(" ")
             : err.message;
         this.error = "Unable to create product: " + msg;
         console.error("Unable to create product", err);
@@ -223,7 +223,7 @@ export default {
       } catch (err) {
         const msg =
           err.name == "ValidationError"
-            ? err.data.map(e => e.message).join(" ")
+            ? err.data.map((e) => e.message).join(" ")
             : err.message;
         this.error = "Unable to update product: " + msg;
         console.error("Unable to update product", err);
@@ -251,11 +251,11 @@ export default {
      */
     async fetch() {
       this.products = await this.broker.call("products.find");
-    }
+    },
   },
 
   async mounted() {
     await this.fetch();
-  }
+  },
 };
 </script>
